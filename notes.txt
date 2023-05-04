@@ -1,0 +1,4 @@
+npx create-react-app
+npm i cors dotenv express pg pg-hstore sequelize react-router-dom
+
+npm i -g sequelize-cli
