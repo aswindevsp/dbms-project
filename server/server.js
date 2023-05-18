@@ -3,34 +3,47 @@ const express = require("express");
 const app = express();
 const pool = require("./db");
 const bodyParser = require("body-parser");
-app.use(bodyParser.json());
+const cors = require('cors');
 
-app.get("/users", async (req, res) => {
-  try {
-    const users = await pool.query(
-      "SELECT * FROM users WHERE username = 'asdf'"
-    );
-    res.json(users.rows);
-  } catch (err) {
-    console.error(err.message);
-  }
-});
+app.use(bodyParser.json());
+app.use(cors());
 
 //login
 app.post("/login", async (req, res) => {
+  console.log("Boop beep receiving login request")
   const { username, password } = req.body;
 
+  console.log("username: ", username)
   // Check if the username and password are valid.
-  const user = await pool.query("SELECT * FROM users WHERE username = 'asdf'");
+  const user = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+ 
 
-  console.log(user.rows[0].username);
 
-  if (!user || user.rows[0].password !== password) {
-    res.status(401).send("Invalid username or password");
-    return;
+  if (!user || user.rows.length === 0 || user.rows[0].password !== password) {
+    res.status(401).json({ success: false, message: 'Invalid username or password' });
   } else {
-    res.status(200).send("Login successful");
+    res.status(200).json({ success: true, message: 'Login successful' });
+  }
+});
+
+app.post("/register", async (req, res) => {
+  console.log("Receiving registration request");
+  const { username, password } = req.body;
+
+  // Check if the username is already taken
+  const existingUser = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+  if (existingUser.rows.length > 0) {
+    res.status(409).json({ success: false, message: 'Username is already taken' });
     return;
+  }
+
+  // Create a new user
+  const newUser = await pool.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *", [username, password]);
+
+  if (newUser) {
+    res.status(201).json({ success: true, message: 'Account created successfully' });
+  } else {
+    res.status(500).json({ success: false, message: 'Failed to create account' });
   }
 });
 
