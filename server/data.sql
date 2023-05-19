@@ -1,3 +1,7 @@
+CREATE DATABASE dbms;
+
+\c dbms;
+
 CREATE DATABASE users;
 
 CREATE TABLE users (
