@@ -11,11 +11,11 @@ app.use(cors());
 //login
 app.post("/login", async (req, res) => {
   console.log("Boop beep receiving login request")
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  console.log("username: ", username)
+  console.log("username: ", email, "password: ", password)
   // Check if the username and password are valid.
-  const user = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+  const user = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
  
 
 
@@ -28,17 +28,17 @@ app.post("/login", async (req, res) => {
 
 app.post("/register", async (req, res) => {
   console.log("Receiving registration request");
-  const { username, password } = req.body;
+  const {firstName, lastName, email, password, phoneNo } = req.body;
 
   // Check if the username is already taken
-  const existingUser = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
+  const existingUser = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
   if (existingUser.rows.length > 0) {
-    res.status(409).json({ success: false, message: 'Username is already taken' });
+    res.status(409).json({ success: false, message: 'email is already taken' });
     return;
   }
 
   // Create a new user
-  const newUser = await pool.query("INSERT INTO users (username, password) VALUES ($1, $2) RETURNING *", [username, password]);
+  const newUser = await pool.query("INSERT INTO users (firstName, lastName, email, password, phoneNo) VALUES ($1, $2, $3, $4, $5) RETURNING *", [firstName, lastName ,email, password, phoneNo]);
 
   if (newUser) {
     res.status(201).json({ success: true, message: 'Account created successfully' });
