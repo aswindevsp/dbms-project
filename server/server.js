@@ -22,7 +22,7 @@ app.post("/login", async (req, res) => {
   if (!user || user.rows.length === 0 || user.rows[0].password !== password) {
     res.status(401).json({ success: false, message: 'Invalid username or password' });
   } else {
-    res.status(200).json({ success: true, message: 'Login successful' });
+    res.status(200).json({ success: true, message: 'Login successful', user: user.rows[0] });
   }
 });
 

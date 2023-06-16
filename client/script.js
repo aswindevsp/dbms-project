@@ -1,3 +1,22 @@
+// Initialize user variable with values firstName, lastName, email, password, phoneNo and userID
+let user = {
+  id:"",
+  firstname: "",
+  lastname: "",
+  email: "",
+  phoneno: "",
+};
+
+let product = {
+  id: "123",
+  name: "Product Name",
+  description: "Product Description",
+  price: 9.99,
+};
+
+const productElement = document.querySelector('[data-reflow-type="product"]');
+productElement.setAttribute('data-bss-dynamic-product-param', JSON.stringify(product));
+
 function login(event) {
   event.preventDefault(); // Prevent the default form submission behavior
 
@@ -13,7 +32,12 @@ function login(event) {
     .then((response) => response.json())
     .then((data) => {
       if (data.success) {
-        alert(data.message); // Display success message
+        alert(data.message); // Display sucesss message
+        user = data.user; // Maps user details to the user variable
+        //redirect to home page
+        window.location.href = "index.html"; 
+        const userIdElement = document.getElementById('user-id');
+        userIdElement.textContent = user.id;
       } else {
         alert(data.message); // Display error message
       }
