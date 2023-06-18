@@ -33,6 +33,7 @@ app.post("/signup", async (req, res) => {
   // Check if the email is already taken
   const existingEmail = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
   if (existingEmail.rows.length > 0) {
+    console.log("Email is already taken");
     res.status(409).json({ success: false, message: 'Email is already taken' });
     return;
   }
@@ -52,4 +53,8 @@ app.post("/signup", async (req, res) => {
   } else {
     res.status(500).json({ success: false, message: 'Failed to create account' });
   }
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
