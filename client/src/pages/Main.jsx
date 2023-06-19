@@ -21,6 +21,9 @@ const Main = () => {
     <div>
       <Navbar />
       <Landing />
+      <div className="flex justify-center my-6">
+        <div className="bg-black h-[3px] w-1/2 my-2">
+      </div></div>
       <List data={tempList} />
     </div>
   );
