@@ -14,6 +14,7 @@ const SignUp = () => {
     }
   }, [navigateTo]);
 
+  const [validationErrors, setValidationErrors] = useState({});
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -34,21 +35,31 @@ const SignUp = () => {
       .min(3, "Password must be at least 3 characters"),
   });
 
-  const onSubmitHandler = async (event) => {
-    event.preventDefault();
-    try {
-      await schema.validate(
-        { firstName, lastName, email, phoneNo, password },
-        { abortEarly: false }
-      );
-      const res = await signup(firstName, lastName, email, password, phoneNo);
-      sessionStorage.setItem("id", res.id);
-      window.location.href = "/";
-    } catch (err) {
-      console.error(err);
-      setErrorMessage(err.message); // Set the error message stateconsole.error(err);
+const onSubmitHandler = async (event) => {
+  event.preventDefault();
+  try {
+    await schema.validate(
+      { firstName, lastName, email, phoneNo, password },
+      { abortEarly: false }
+    );
+    const res = await signup(firstName, lastName, email, password, phoneNo);
+    sessionStorage.setItem("id", res.id);
+    window.location.href = "/";
+  } catch (err) {
+    console.error(err);
+    if (err.response) {
+      setErrorMessage(err.response.data.message);
+    } else {
+      const validationErrors = {};
+      err.inner.forEach((error) => {
+        console.log(error.path, error.message); // Log the validation error message for each field
+        validationErrors[error.path] = error.message;
+      });
+      console.log(validationErrors); // Log the validationErrors object
+      setValidationErrors(validationErrors);
     }
-  };
+  }
+};
 
   return (
     <Box
@@ -99,6 +110,8 @@ const SignUp = () => {
               type="text"
               value={firstName}
               onChange={(event) => setFirstName(event.target.value)}
+              error={!!validationErrors.firstName} // Set error prop to true if there is a validation error for this field
+              helperText={validationErrors.firstName}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -111,6 +124,8 @@ const SignUp = () => {
               type="text"
               value={lastName}
               onChange={(event) => setLastName(event.target.value)}
+              error={!!validationErrors.lastName}
+              helperText={validationErrors.lastName}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -123,6 +138,8 @@ const SignUp = () => {
               type="email"
               value={email}
               onChange={(event) => setEmail(event.target.value)}
+              error={!!validationErrors.email}
+              helperText={validationErrors.email}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -135,6 +152,8 @@ const SignUp = () => {
               type="number"
               value={phoneNo}
               onChange={(event) => setPhoneNo(event.target.value)}
+              error={!!validationErrors.phoneNo}
+              helperText={validationErrors.phoneNo}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -147,6 +166,8 @@ const SignUp = () => {
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              error={!!validationErrors.password}
+              helperText={validationErrors.password}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
