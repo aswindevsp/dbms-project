@@ -30,7 +30,7 @@ app.post("/user/login", async (req, res) => {
 
   try {
     // Check if the email and password are valid
-    const user = await pool.query("SELECT * FROM \"user\" WHERE email = $1", [email]);
+    const user = await pool.query("SELECT * FROM \"User\" WHERE email = $1", [email]);
 
     if (!user || user.rows.length === 0 || user.rows[0].password !== password) {
       res.status(401).json({ success: false, message: 'Invalid username or password' });
@@ -50,7 +50,7 @@ app.post("/user/signup", async (req, res) => {
 
   try {
     // Check if the email is already taken
-    const existingEmail = await pool.query("SELECT * FROM \"user\" WHERE email = $1", [email]);
+    const existingEmail = await pool.query("SELECT * FROM \"User\" WHERE email = $1", [email]);
     if (existingEmail.rows.length > 0) {
       console.log("Email is already taken");
       res.status(409).json({ success: false, message: 'Email is already taken' });
@@ -58,14 +58,14 @@ app.post("/user/signup", async (req, res) => {
     }
 
     // Check if the phone number is already taken
-    const existingPhone = await pool.query("SELECT * FROM \"user\" WHERE phoneNo = $1", [phoneNo]);
+    const existingPhone = await pool.query("SELECT * FROM \"User\" WHERE phoneNo = $1", [phoneNo]);
     if (existingPhone.rows.length > 0) {
       res.status(409).json({ success: false, message: 'Phone number is already taken' });
       return;
     }
 
     // Create a new user
-    const newUser = await pool.query("INSERT INTO \"user\" (firstName, lastName, email, password, phoneNo) VALUES ($1, $2, $3, $4, $5) RETURNING *", [firstName, lastName, email, password, phoneNo]);
+    const newUser = await pool.query("INSERT INTO \"User\" (firstName, lastName, email, password, phoneNo) VALUES ($1, $2, $3, $4, $5) RETURNING *", [firstName, lastName, email, password, phoneNo]);
 
     if (newUser) {
       res.status(201).json({ success: true, message: 'Signup successful', user: newUser.rows[0], id: newUser.rows[0].UserID });
@@ -78,116 +78,70 @@ app.post("/user/signup", async (req, res) => {
   }
 });
 
-// Add to shopping cart
-app.post("/user/addCart", async (req, res) => {
-  console.log("Receiving add to cart request");
-  const { userId, gameId, quantity } = req.body;
-
-  try {
-    // Check if the product is already in the shopping cart
-    const existingItem = await pool.query("SELECT * FROM shoppingcart WHERE UserID = $1 AND GameID = $2", [userId, gameId]);
-
-    if (existingItem.rows.length > 0) {
-      console.log("Product is already in the shopping cart")
-      // Update the quantity of the product in the shopping cart
-      await pool.query("UPDATE shoppingcart SET Quantity = $1, Subtotal = $2 WHERE UserID = $3 AND GameID = $4", [quantity, quantity * existingItem.rows[0].price, userId, gameId]);
-    } else {
-      // Add the product to the shopping cart
-      await pool.query("INSERT INTO shoppingcart (UserID, GameID, Quantity, Subtotal) VALUES ($1, $2, $3, $4)", [userId, gameId, quantity, quantity * existingItem.rows[0].price]);
+// Buying a product
+app.post("/user/buy", async(req, res) => {
+  console.log("Tyring to buy a product");
+  const { userID, productID, quantity } = req.body;
+  try{
+    // Check if the product exists
+    const product = await pool.query("SELECT * FROM game WHERE gameID = $1", [productID]);
+    if (!product || product.rows.length === 0) {
+      res.status(401).json({ success: false, message: 'Product does not exist' });
+      return;
     }
-    res.status(201).json({ success: true, message: 'Added to shopping cart' });
-  }
-  catch (error) {
-    console.error("Error occurred while adding to shopping cart:", error);
-    res.status(500).json({ success: false, message: 'An error occurred while adding to shopping cart' });
-  }
 
-});
+    // Check if the quantity is valid
+    if (quantity <= 0 || quantity > product.rows[0].quantity) {
+      res.status(401).json({ success: false, message: 'Invalid quantity' });
+      return;
+    }    
 
-// Get shopping cart by user ID
-app.get("/user/getCart/:userId", async (req, res) => {
-  console.log("Receiving shopping cart request");
-
-  const userId = parseInt(req.params.userId);
-
-  try {
-    // Retrieve the shopping cart items for the given user ID
-    const shoppingCartItems = await pool.query("SELECT * FROM shoppingcart WHERE UserID = $1", [userId]);
-
-    res.status(200).json({ success: true, shoppingCartItems: shoppingCartItems.rows });
-  } catch (error) {
-    console.error("Error occurred while retrieving shopping cart:", error);
-    res.status(500).json({ success: false, message: 'An error occurred while retrieving shopping cart' });
-  }
-});
-
-// Move products from shopping cart to order and update inventory quantity
-app.post("/user/:userId/orderCart", async (req, res) => {
-  console.log("Moving products from shopping cart to order");
-
-  const userId = parseInt(req.params.userId);
-
-  // Validate if userId is a valid integer
-  if (isNaN(userId)) {
-    res.status(400).json({ success: false, message: 'Invalid user ID' });
-    return;
-  }
-
-  try {
-    // Begin a transaction to perform the operations atomically
     await pool.query("BEGIN");
 
-    // Retrieve the shopping cart items for the given user ID
-    const shoppingCartItems = await pool.query("SELECT * FROM shoppingcart WHERE UserID = $1", [userId]);
+    // Create a new order
+    const newOrder = await pool.query("INSERT INTO \"Order\" (UserID, gameID, quantity) VALUES ($1, $2, $3) RETURNING *", [userID, productID, quantity]);
 
-    // Create a new order for the user
-    const newOrder = await pool.query(
-      "INSERT INTO \"Order\" (UserID, OrderDate, TotalAmount, Status) VALUES ($1, current_date, 0, 'Pending') RETURNING OrderID",
-      [userId]
-    );
+    // Update the quantity of the product
+    const newQuantity = product.rows[0].quantity - quantity;
+    const updatedProduct = await pool.query("UPDATE game SET quantity = $1 WHERE gameID = $2 RETURNING *", [newQuantity, productID]);
 
-    const orderId = newOrder.rows[0].orderid;
-
-    // Move items from shopping cart to order items
-    for (const item of shoppingCartItems.rows) {
-      // Check if the product is in stock
-      const product = await pool.query("SELECT Quantity FROM game WHERE GameID = $1", [item.gameid]);
-      const quantityInStock = product.rows[0].quantity;
-
-      if (quantityInStock >= item.quantity) {
-        await pool.query(
-          "INSERT INTO orderitem (OrderID, GameID, Quantity, Subtotal) VALUES ($1, $2, $3, $4)",
-          [orderId, item.gameid, item.quantity, item.subtotal]
-        );
-
-        // Update the quantity of the product in the inventory
-        await pool.query(
-          "UPDATE game SET Quantity = Quantity - $1 WHERE GameID = $2",
-          [item.quantity, item.gameid]
-        );
-      } else {
-        // If the item is out of stock, rollback the transaction and send a response indicating the failure
-        await pool.query("ROLLBACK");
-        res.status(400).json({ success: false, message: `Product with ID ${item.gameid} is out of stock` });
-        return;
-      }
+    if (newOrder && updatedProduct) {
+      await pool.query("COMMIT");
+      res.status(201).json({ success: true, message: 'Order successful', order: newOrder.rows[0], product: updatedProduct.rows[0] });
+    } else {
+      await pool.query("ROLLBACK");
+      res.status(500).json({ success: false, message: 'Failed to create order' });
     }
 
-    // Delete the shopping cart items for the user
-    await pool.query("DELETE FROM shoppingcart WHERE UserID = $1", [userId]);
-
-    // Commit the transaction
-    await pool.query("COMMIT");
-
-    res.status(200).json({ success: true, message: 'Products moved to order successfully' });
-  } catch (error) {
-    // Rollback the transaction in case of an error
-    await pool.query("ROLLBACK");
-
-    console.error("Error occurred while moving products to order:", error);
-    res.status(500).json({ success: false, message: 'An error occurred while moving products to order' });
+  } catch(error) {
+    console.error("Error occurred during buying:", error);
+    res.status(500).json({ success: false, message: 'An error occurred during buying' });
   }
 });
+
+// Get all orders of a user
+app.get("/user/orders/:id", async (req, res) => {
+  console.log("Retrieving all orders of a user");
+  const { id } = req.params;
+
+  try {
+    // Retrieve all orders of a user
+    const orders = await pool.query(
+      'SELECT "Order".OrderID, "User".FirstName, "User".LastName, "User".Email, "User".PhoneNo, Game.Title, "Order".OrderDate, "Order".TotalAmount, "Order".Status ' +
+      'FROM "Order" ' +
+      'JOIN "User" ON "Order".UserID = "User".UserID ' +
+      'JOIN Game ON "Order".GameID = Game.GameID ' +
+      'WHERE "Order".UserID = $1',
+      [id]
+    );
+
+    res.status(200).json({ success: true, orders: orders.rows });
+  } catch (error) {
+    console.error("Error occurred while retrieving orders:", error);
+    res.status(500).json({ success: false, message: 'An error occurred while retrieving orders' });
+  }
+});
+
 
 // Define the route to retrieve all products in the inventory
 app.get("/inventory/products", async (req, res) => {

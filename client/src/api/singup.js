@@ -1,5 +1,5 @@
 export const signup = async (firstName, lastName, email, password, phoneNo) => {
-    const response = await fetch('http://localhost:3001/signup', {
+    const response = await fetch('http://localhost:3001/user/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

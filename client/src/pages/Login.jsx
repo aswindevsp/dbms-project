@@ -24,8 +24,10 @@ const Login = () => {
     try {
       const data = await login(email, password);
       // Redirect to home page or dashboard
-      sessionStorage.setItem("id", data.id);
-      window.location.href = "/";
+      //console.log(data);
+      sessionStorage.setItem("id", data.user.userid);
+      console.log(sessionStorage.getItem("id"));
+      // window.location.href = "/";
     } catch (error) {
       console.error(error);
       setError("Incorrect email or password");

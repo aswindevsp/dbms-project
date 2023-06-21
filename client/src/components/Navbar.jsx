@@ -19,6 +19,9 @@ const Navbar = () => {
           <Link to="/cart">
             <h1 className="text-2xl font-bold text-white">Cart</h1>
           </Link>
+          <Link to="/OrderPage">
+            <h1 className="text-2xl font-bold text-white">OrderPage</h1>
+          </Link>
           <li>
               <button className=" text-white" onClick={handleLogout}>Logout</button>
             </li>

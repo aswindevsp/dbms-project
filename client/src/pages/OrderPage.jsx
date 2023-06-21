@@ -1,46 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { userOrder } from '../api/userOrder';
 
 const OrderPage = () => {
+  const [orderData, setOrderData] = useState([]);
+
   useEffect(() => {
-    const orderData = [
-      {
-        orderId: '#00123',
-        date: '2023-06-15',
-        items: 3,
-        total: 99.99,
-        status: 'Shipped',
-      },
-      {
-        orderId: '#00122',
-        date: '2023-06-12',
-        items: 1,
-        total: 49.99,
-        status: 'Delivered',
-      },
-    ];
+    const fetchOrderData = async () => {
+      try {
+        const response = await userOrder();
+        setOrderData(response.orders);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-    const tableBody = document.querySelector('#order-table tbody');
-
-    orderData.forEach((order, index) => {
-      const row = document.createElement('tr');
-      row.innerHTML = `
-        <td>${order.orderId}</td>
-        <td>${order.date}</td>
-        <td>${order.items} item(s)</td>
-        <td>$${order.total.toFixed(2)}</td>
-        <td>${order.status}</td>
-      `;
-      row.classList.add(
-        `bg-${index % 2 === 0 ? 'blue' : 'green'}-200`,
-        'p-4',
-        'border-b',
-        'border-gray-300',
-        'rounded-lg',
-        'shadow-md',
-        'my-4'
-      );
-      tableBody.appendChild(row);
-    });
+    fetchOrderData();
   }, []);
 
   return (
@@ -51,13 +25,26 @@ const OrderPage = () => {
           <thead>
             <tr>
               <th className="text-left">Order ID</th>
-              <th className="text-left">Date</th>
-              <th className="text-left">Items</th>
-              <th className="text-left">Total</th>
+              <th className="text-left">Title</th>
+              <th className="text-left">Ordered Date</th>
+              <th className="text-left">Total Price</th>
               <th className="text-left">Status</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody>
+            {orderData.map((order, index) => (
+              <tr
+                key={order.orderid}
+                className={`bg-${index % 2 === 0 ? 'blue' : 'green'}-200 p-4 border-b border-gray-300 rounded-lg shadow-md my-4`}
+              >
+                <td>{order.orderid}</td>
+                <td>{order.title}</td>
+                <td>{new Date(order.orderdate).toLocaleDateString()}</td>
+                <td>${parseFloat(order.totalamount).toFixed(2)}</td>
+                <td>{order.status}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
