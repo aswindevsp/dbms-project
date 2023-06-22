@@ -144,7 +144,7 @@ app.get("/user/orders/:id", async (req, res) => {
 
 
 // Define the route to retrieve all products in the inventory
-app.get("/inventory/products", async (req, res) => {
+app.get("/games", async (req, res) => {
   console.log("Retrieving all products in the inventory");
 
   try {

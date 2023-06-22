@@ -1,3 +1,12 @@
+-- Drop "Order" table
+DROP TABLE IF EXISTS "Order";
+
+-- Drop "Game" table
+DROP TABLE IF EXISTS Game;
+
+-- Drop "User" table
+DROP TABLE IF EXISTS "User";
+
 -- Create User table
 CREATE TABLE "User" (
     UserID SERIAL PRIMARY KEY,
