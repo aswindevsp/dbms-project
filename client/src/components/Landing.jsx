@@ -5,7 +5,7 @@ const Landing = () => {
         <div className="relative">
           <img src="/gameImages/toa.webp" alt="Elden Ring" className="w-full" />
           <div className="absolute top-0 left-0 w-full h-full z-10 flex justify-center items-center WBE opacity-0 hover:opacity-100 transition-opacity ease-in-out duration-500">
-            <img src="/gameImages/toaLogo.webp" className="w-5/6" />
+            <img src="/gameImages/toaTest.webp" className="w-5/6" />
           </div>
         </div>
       </div>
