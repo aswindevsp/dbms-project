@@ -27,7 +27,7 @@ const Login = () => {
       //console.log(data);
       sessionStorage.setItem("id", data.user.userid);
       console.log(sessionStorage.getItem("id"));
-      // window.location.href = "/";
+      window.location.href = "/";
     } catch (error) {
       console.error(error);
       setError("Incorrect email or password");
