@@ -46,7 +46,12 @@ const List = ({ data }) => {
                   <h1 className="text-2xl">{modalData.developer}</h1>
                   <h1 className="text-md italic">{modalData.release}</h1>
                 </div>
-                <h1 className="text-2xl underline">{modalData.price}</h1>
+                <div className="flex gap-20">
+                  <h1 className="text-2xl underline">{modalData.price}</h1>
+                  <button className="w-24 h-10 bg-yellow-400 rounded-lg text-black flex justify-center items-center hover:scale-110 transition-transform ease-in-out duration-500">
+                    Buy
+                  </button>
+                </div>
                 <h1 className="text-sm pt-6">{modalData.desc}</h1>
                 <h1 className="text-2xl font-bold underline">Specifications</h1>
                 <div className="grid grid-rows-2 grid-cols-3 gap-2">
