@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { userOrder } from "../api/userOrder";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarOrder";
 import testImage from "../assets/images/test.jpeg";
 
 const OrderPage = () => {

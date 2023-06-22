@@ -18,7 +18,8 @@ const List = ({ data }) => {
             }}
             className="w-56 bg-black/90 text-white flex flex-col justify-center items-center cursor-pointer font-bold hover:scale-110 transition-all ease-in-out duration-500"
           >
-            <img src={value.imageurl} alt={value.title} className="w-full h-full" />
+            {/* <img src={value.imageurl} alt={value.title} className="w-full h-full" /> */}
+            <img src={testImage} alt={value.title} className="w-full h-full" />
           </div>
         ))}
       </div>
@@ -35,7 +36,8 @@ const List = ({ data }) => {
             />
             <div className="w-full h-full flex gap-5">
               <img
-                src={modalData.imageurl}
+                // src={modalData.imageurl}
+                src={testImage}
                 alt={modalData.name}
                 className="w-[500px]"
               />
