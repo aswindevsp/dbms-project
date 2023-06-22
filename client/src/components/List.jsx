@@ -6,7 +6,7 @@ const List = ({ data }) => {
   const [modalData, setModalData] = useState(null);
   return (
     <div className="w-screen">
-      <div className="flex gap-5 flex-wrap  m-5">
+      <div className="flex gap-5 flex-wrap justify-center  m-5">
         {data.map((value, index) => (
           <div
             key={index}
