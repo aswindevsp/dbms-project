@@ -32,13 +32,12 @@ const List = ({ data }) => {
               src="/x.webp"
             />
             <div className="w-full h-full flex gap-5">
-              <div className="min-w-[500px]">
-                <img
-                  src={modalData.img}
-                  alt={modalData.name}
-                  className="w-full"
-                />
-              </div>
+              <img
+                src={modalData.img}
+                alt={modalData.name}
+                className="w-[500px]"
+              />
+
               <div className="flex flex-col gap-2 h-full">
                 <h1 className="text-3xl font-bold">{modalData.title}</h1>
                 <div className="flex gap-20 items-center">
