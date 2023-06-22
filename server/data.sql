@@ -65,7 +65,7 @@ VALUES (
     'PlayStation 5',
     'Final Fantasy',
     'Square Enix',
-    '/gameImages/gaem1.webp'
+    'https://images-ext-2.discordapp.net/external/OFZfPCrnlgqo1ZYWgvg7Esvj1mlSN2ETpujJ4sGdbDk/https/i.imgur.com/JHFymHd.png' 
 );
 
 
@@ -85,7 +85,8 @@ VALUES (
     'PlayStation 4, Xbox One, PC',
     'Call of Duty',
     'Activision',
-    '/gameImages/gaem2.webp'
+    'https://images-ext-2.discordapp.net/external/0HBLs6qIct3NFZcYdbSSLSx3ooW9Raqockc_UeXJpCs/https/i.imgur.com/0Q86UMd.png'
+    
 );
 
 -- Game 3
@@ -104,7 +105,7 @@ VALUES (
     'Nintendo Switch',
     'The Legend of Zelda',
     'Nintendo',
-    '/gameImages/gaem3.webp'
+    'https://images-ext-2.discordapp.net/external/0DiaWNQ9QfCxkWy_ZCgOL0GlnjBOt5Z6YYT95hIyj1w/https/i.imgur.com/QfdAWcf.png'
 );
 
 -- Game 4
@@ -123,7 +124,7 @@ VALUES (
     'PlayStation 4, Xbox One, PC',
     'Grand Theft Auto',
     'Rockstar Games',
-    '/gameImages/gaem4.webp'
+    'https://images-ext-2.discordapp.net/external/3sFnpvD3_Yw73c-aiNwihzKWIqpncDVVJdvX3qLzfjA/https/i.imgur.com/HLpFSRj.png'
 );
 
 -- Game 5
@@ -142,7 +143,7 @@ VALUES (
     'Multiple Platforms',
     'Minecraft',
     'Microsoft Studios',
-    '/gameImages/gaem5.webp'
+    'https://images-ext-1.discordapp.net/external/FArbzrkliOUTPr6H4Imy-BPtQ-8YRkm7dMqaC-Z5_CA/https/i.imgur.com/F08fizn.png'
 );
 
 -- Game 6
@@ -161,7 +162,7 @@ VALUES (
     'PlayStation 4, Xbox One, PC',
     'Red Dead Redemption',
     'Rockstar Games',
-    '/gameImages/gaem6.webp'
+    'https://images-ext-1.discordapp.net/external/-ia7RsHFbJGyxmuX-Sxa5lkdTHZV93wwlWuMMDcDuRU/https/i.imgur.com/qKTsTvR.png'
 );
 
 INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
@@ -179,7 +180,7 @@ VALUES (
     'Nintendo Switch',
     'Super Mario',
     'Nintendo',
-    '/gameImages/gaem7.webp'
+    'https://images-ext-1.discordapp.net/external/tAw9kBdY5VLhKAxoOcc9gu6k5YLvBPGoGc7AiGABVpA/https/i.imgur.com/CogN4rL.png'
 );
 
 
@@ -199,7 +200,7 @@ VALUES (
     'PlayStation 4, Xbox One, PC',
     'The Witcher',
     'CD Projekt',
-    '/gameImages/gaem8.webp'
+    'https://images-ext-1.discordapp.net/external/n-Xd8YYiyepEfatF7JtuT8nEyFoYNC5xb4xtQiLzesY/https/i.imgur.com/3weKDua.png'
 );
 
 -- Game 9
@@ -218,7 +219,7 @@ VALUES (
     'Nintendo Switch',
     'Pokémon',
     'Nintendo',
-    '/gameImages/gaem9.webp'
+    'https://images-ext-2.discordapp.net/external/vwNAswlOn86pBQntCeYKojERBL8xb_Oe_beQ1DZAC74/https/i.imgur.com/j7i5ELP.png'
 );
 
 -- Game 10
@@ -237,7 +238,7 @@ VALUES (
     'Multiple Platforms',
     'Fortnite',
     'Epic Games',
-    '/gameImages/gaem10.webp'
+    'https://images-ext-1.discordapp.net/external/rma5MaguhXM3zmkBry3gI4-VOJoJ3yUxzf3NkNzyrZ8/https/i.imgur.com/ykp20YI.png'
 );
 
 
