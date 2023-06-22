@@ -11,19 +11,26 @@ const Navbar = () => {
   const id = sessionStorage.getItem("id");
 
   return (
-    <div className="h-16 bg-black flex items-center w-screen p-5">
-      <h1 className="text-2xl font-bold text-white">Logo?</h1>
+    <div className="sticky top-0 bg-black/90 flex items-center w-screen p-1 px-5 shadow-2xl shadow-black z-20 WBE">
+      <div className="flex gap-4 w-1/2 items-center">
+        <img src="/logo.webp" alt="GameZone" className="w-16" />
+        <h1 className="text-2xl font-bold text-white">GamerZone X</h1>
+      </div>
       <div className="flex justify-end gap-5 w-full ">
         {id ? (
           <>
-          <Link to="/cart">
-            <h1 className="text-2xl font-bold text-white">Cart</h1>
-          </Link>
-          <Link to="/OrderPage">
-            <h1 className="text-2xl font-bold text-white">OrderPage</h1>
-          </Link>
-          <li>
-              <button className=" text-white" onClick={handleLogout}>Logout</button>
+            <Link to="/cart">
+              <h1 className="text-2xl font-bold text-white">Cart</h1>
+            </Link>
+            <h1 className="text-white text-2xl font-bold">|</h1>
+            <Link to="/OrderPage">
+              <h1 className="text-2xl font-bold text-white">OrderPage</h1>
+            </Link>
+            <h1 className="text-white text-2xl font-bold">|</h1>
+            <li>
+              <button className=" text-white" onClick={handleLogout}>
+                Logout
+              </button>
             </li>
           </>
         ) : (
@@ -31,6 +38,7 @@ const Navbar = () => {
             <Link to="/login">
               <h1 className="text-2xl font-bold text-white">Login</h1>
             </Link>
+            <h1 className="text-white text-2xl font-bold">|</h1>
             <Link to="/signup">
               <h1 className="text-2xl font-bold text-white">Sign Up</h1>
             </Link>

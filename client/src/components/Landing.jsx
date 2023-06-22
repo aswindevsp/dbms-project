@@ -5,9 +5,7 @@ const Landing = () => {
         <div className="relative">
           <img src="/gameImages/toa.webp" alt="Elden Ring" className="w-full" />
           <div className="absolute top-0 left-0 w-full h-full z-10 flex justify-center items-center WBE opacity-0 hover:opacity-100 transition-opacity ease-in-out duration-500">
-            <h1 className="text-5xl font-bold text-white textStroke">
-              Tales Of Arise
-            </h1>
+            <img src="/gameImages/toaLogo.webp" className="w-5/6" />
           </div>
         </div>
       </div>
@@ -19,9 +17,7 @@ const Landing = () => {
             className="w-full"
           />
           <div className="absolute top-0 left-0 w-full h-full z-10 flex justify-center items-center WBE opacity-0 hover:opacity-100 transition-opacity ease-in-out duration-500">
-            <h1 className="text-5xl font-bold text-white textStroke">
-              Elden Ring
-            </h1>
+            <img src="/gameImages/eldenLogo.webp" className="w-5/6" />
           </div>
         </div>
 
@@ -32,9 +28,7 @@ const Landing = () => {
             className="w-full "
           />
           <div className="absolute top-0 left-0 w-full h-full z-10 flex justify-center items-center WBE opacity-0 hover:opacity-100 transition-opacity ease-in-out duration-500">
-            <h1 className="text-5xl font-bold text-white textStroke">
-              Street Fighter 6
-            </h1>
+            <img src="/gameImages/sf6Logo.webp" className="w-5/6" />
           </div>
         </div>
       </div>
