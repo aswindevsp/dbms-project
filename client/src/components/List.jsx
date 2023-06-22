@@ -52,24 +52,24 @@ const List = ({ data }) => {
                     Buy
                   </button>
                 </div>
-                <h1 className="text-sm pt-6">{modalData.desc}</h1>
+                <h1 className="text-sm pt-6">{modalData.description}</h1>
                 <h1 className="text-2xl font-bold underline">Specifications</h1>
                 <div className="grid grid-rows-2 grid-cols-3 gap-2">
                   <div className=" row-span-1 col-span-1">
                     <h1 className="text-sm">Order Attributes:</h1>
-                    <h1 className="text-sm">UPC {modalData.spec.upc}</h1>
+                    <h1 className="text-sm">UPC {modalData.upc}</h1>
                   </div>
                   <div className=" row-span-1 col-span-2">
                     <h1 className="text-sm">General:</h1>
                     <div className="flex  gap-5 items-center">
-                      <h1 className="text-sm">UPC {modalData.spec.upc}</h1>
+                      <h1 className="text-sm">UPC {modalData.upc}</h1>
                       <h1>|</h1>
                       <h1 className="text-sm">
-                        Brand Name: {modalData.spec.brand}
+                        Brand Name: {modalData.brand}
                       </h1>
                       <h1>|</h1>
                       <h1 className="text-sm">
-                        Vendor: {modalData.spec.vendorNo}
+                        Vendor: {modalData.vendorNo}
                       </h1>
                     </div>
                   </div>
@@ -77,27 +77,27 @@ const List = ({ data }) => {
                     <h1 className="text-sm">Gameplay:</h1>
                     <div className="flex  gap-5 items-center">
                       <h1 className="text-sm">
-                        Player(s): {modalData.spec.noOfPlayer}
+                        Player(s): {modalData.noOfPlayer}
                       </h1>
                       <h1>|</h1>
-                      <h1 className="text-sm">Genre: {modalData.spec.genre}</h1>
+                      <h1 className="text-sm">Genre: {modalData.genre}</h1>
                     </div>
                   </div>
                   <div className=" row-span-1 col-span-1">
                     <h1 className="text-sm">Compatability:</h1>
                     <h1 className="text-sm">
-                      Platforms: {modalData.spec.platforms}
+                      Platforms: {modalData.platforms}
                     </h1>
                   </div>
                   <div className=" row-span-1 col-span-1">
                     <h1 className="text-sm">Fandom:</h1>
 
                     <h1 className="text-sm">
-                      Franchise: {modalData.spec.franchise}
+                      Franchise: {modalData.franchise}
                     </h1>
 
                     <h1 className="text-sm">
-                      Publisher: {modalData.spec.publisherName}
+                      Publisher: {modalData.publisherName}
                     </h1>
                   </div>
                 </div>
