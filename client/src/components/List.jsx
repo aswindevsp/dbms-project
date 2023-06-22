@@ -21,7 +21,7 @@ const List = ({ data }) => {
         ))}
       </div>
       {showModal && (
-        <div className="fixed top-0 min-w-screen min-h-screen bg-white flex justify-center items-center">
+        <div className="fixed top-0 min-w-screen min-h-screen bg-white flex justify-center items-center z-50">
           <div className="relative w-5/6 min-h-[600px] bg-black/90 rounded-md p-5 text-white font-semibold">
             <h1
               className="text-5xl text-white font-bold absolute top-5 right-5 cursor-pointer"
