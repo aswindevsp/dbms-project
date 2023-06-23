@@ -12,7 +12,9 @@ export const userOrder = async () => {
     throw new Error('Login failed');
   }
 
+
   const data = await response.json();
-  console.log(`Data = ${data.orders}`);
+  console.log("Orders");
+  console.log(data.orders);
   return data;
 };

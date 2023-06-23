@@ -56,7 +56,7 @@ const OrderPage = () => {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
-          <button className="bg-yellow-400 text-white px-4 py-2 rounded-md hover:bg-yellow-500">
+          <button className="bg-yellow-400 black-text px-4 py-2 rounded-md hover:bg-yellow-500">
             Search Orders
           </button>
         </div>

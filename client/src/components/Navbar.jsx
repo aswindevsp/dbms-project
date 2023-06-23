@@ -20,10 +20,6 @@ const Navbar = () => {
         {id ? (
           <>
             <>
-              <Link to="/cart">
-                <h1 className="text-2xl font-bold text-white">Cart</h1>
-              </Link>
-              <h1 className="text-white text-2xl font-bold">|</h1>
               <Link to="/OrderPage">
                 <h1 className="text-2xl font-bold text-white">OrderPage</h1>
               </Link>
