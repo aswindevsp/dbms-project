@@ -6,13 +6,35 @@ const List = ({ data }) => {
   const [modalData, setModalData] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
-  const orderGame = (userID, gameID) => {
-    // Logic for ordering the game
-    setShowAlert(true);
-    setTimeout(() => {
-      setShowAlert(false);
+  const orderGame = async (userID, gameID) => {
+    try {
+      await handleOrder(userID, gameID);
+      setShowAlert(true);
+      setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+    } catch (error) {
+      console.error("Error occurred during order:", error);
+      // Handle the error
     }
-    , 3000);
+  };
+  
+  const handleOrder = async (UserID, GameID) => {
+    try {
+      const response = await fetch("http://localhost:3001/user/buy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ UserID, GameID }),
+      });
+      const data = await response.json();
+      console.log(data);
+      // Do something with the order data
+    } catch (error) {
+      console.error("Error occurred during order:", error);
+      // Handle the error
+    }
   };
 
   return (

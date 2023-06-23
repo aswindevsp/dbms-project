@@ -43,7 +43,7 @@ const onSubmitHandler = async (event) => {
       { abortEarly: false }
     );
     const res = await signup(firstName, lastName, email, password, phoneNo);
-    sessionStorage.setItem("id", res.id);
+    sessionStorage.setItem("id", res.user.userid);
     window.location.href = "/";
   } catch (err) {
     console.error(err);
