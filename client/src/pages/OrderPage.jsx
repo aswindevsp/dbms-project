@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { userOrder } from "../api/userOrder";
+import { cancelOrder } from "../api/cancelOrder";
 import Navbar from "../components/NavbarOrder";
 import testImage from "../assets/images/test.jpeg";
 
@@ -24,9 +25,18 @@ const OrderPage = () => {
     order.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleCancelOrder = (orderId) => {
-    // TODO: Implement cancel order functionality
-    console.log(`Cancel order with ID ${orderId}`);
+  console.log(orderData);
+
+  const handleCancelOrder = async (orderId) => {
+    try {
+      await cancelOrder(orderId);
+      // Update the orderData state by removing the canceled order
+      setOrderData(orderData.filter((order) => order.id !== orderId));
+      console.log(`Order with ID ${orderId} cancelled successfully`);
+      window.location.reload();
+    } catch (error) {
+      console.log(`Failed to cancel order with ID ${orderId}`);
+    }
   };
 
   return (
@@ -81,7 +91,7 @@ const OrderPage = () => {
             className="flex items-center border border-gray-400 rounded-md p-4 mb-4"
           >
             <div className="w-1/5">
-              <img src={testImage} alt="Test Image" className="w-full h-auto" />
+              <img src={order.imageurl} alt="Test Image" className="w-full h-auto" />
             </div>
             <div className="w-2/5 ml-4">
               <h2 className="text-lg font-bold">{order.title}</h2>

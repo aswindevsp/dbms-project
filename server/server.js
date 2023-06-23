@@ -43,13 +43,11 @@ app.post("/user/login", async (req, res) => {
         .status(401)
         .json({ success: false, message: "Invalid username or password" });
     } else {
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Login successful",
-          user: user.rows[0],
-        });
+      res.status(200).json({
+        success: true,
+        message: "Login successful",
+        user: user.rows[0],
+      });
     }
   } catch (error) {
     console.error("Error occurred during login:", error);
@@ -97,14 +95,12 @@ app.post("/user/signup", async (req, res) => {
     );
 
     if (newUser) {
-      res
-        .status(201)
-        .json({
-          success: true,
-          message: "Signup successful",
-          user: newUser.rows[0],
-          id: newUser.rows[0].UserID,
-        });
+      res.status(201).json({
+        success: true,
+        message: "Signup successful",
+        user: newUser.rows[0],
+        id: newUser.rows[0].UserID,
+      });
     } else {
       res
         .status(500)
@@ -157,14 +153,12 @@ app.post("/user/buy", async (req, res) => {
 
     if (newOrder && updatedProduct) {
       await pool.query("COMMIT");
-      res
-        .status(201)
-        .json({
-          success: true,
-          message: "Order successful",
-          order: newOrder.rows[0],
-          product: updatedProduct.rows[0],
-        });
+      res.status(201).json({
+        success: true,
+        message: "Order successful",
+        order: newOrder.rows[0],
+        product: updatedProduct.rows[0],
+      });
     } else {
       await pool.query("ROLLBACK");
       res
@@ -194,24 +188,14 @@ app.get("/user/orders/cancel/:id", async (req, res) => {
       res.status(401).json({ success: false, message: "Order does not exist" });
       return;
     }
-
-    // Retrieve the product
-    const product = await pool.query("SELECT * FROM game WHERE gameID = $1", [
-      order.rows[0].gameID,
+    const product = await pool.query("SELECT * FROM game WHERE gameid = $1", [
+      order.rows[0].gameid,
     ]);
-    if (!product || product.rows.length === 0) {
-      res
-        .status(401)
-        .json({ success: false, message: "Product does not exist" });
+    if (!product.rows[0]) {
+      // handle the case where the product is not found
+      res.status(404).json({ error: "Product not found" });
       return;
     }
-
-    // Update the quantity of the product
-    const newQuantity = product.rows[0].quantity + order.rows[0].quantity;
-    const updatedProduct = await pool.query(
-      "UPDATE game SET quantity = $1 WHERE gameID = $2 RETURNING *",
-      [newQuantity, order.rows[0].gameID]
-    );
 
     // Set the status of the order to cancelled
     const updatedOrder = await pool.query(
@@ -219,16 +203,13 @@ app.get("/user/orders/cancel/:id", async (req, res) => {
       [id]
     );
 
-    if (updatedProduct && updatedOrder) {
+    if (updatedOrder) {
       await pool.query("COMMIT");
-      res
-        .status(200)
-        .json({
-          success: true,
-          message: "Order cancelled",
-          order: updatedOrder.rows[0],
-          product: updatedProduct.rows[0],
-        });
+      res.status(200).json({
+        success: true,
+        message: "Order cancelled",
+        order: updatedOrder.rows[0],
+      });
     }
   } catch (error) {
     await pool.query("ROLLBACK");
@@ -238,32 +219,29 @@ app.get("/user/orders/cancel/:id", async (req, res) => {
       .json({ success: false, message: "An error occurred during cancelling" });
   }
 });
-
 // Get all orders of a user
 app.get("/user/orders/:id", async (req, res) => {
   console.log("Retrieving all orders of a user");
   const { id } = req.params;
 
-  try {
-    // Retrieve all orders of a user
-    const orders = await pool.query(
-      'SELECT "Order".OrderID, "User".FirstName, "User".LastName, "User".Email, "User".PhoneNo, Game.Title, "Order".OrderDate, "Order".TotalAmount, "Order".Status ' +
-        'FROM "Order" ' +
-        'JOIN "User" ON "Order".UserID = "User".UserID ' +
-        'JOIN Game ON "Order".GameID = Game.GameID ' +
-        'WHERE "Order".UserID = $1',
-      [id]
-    );
+ try {
+  // Retrieve all orders of a user
+  const orders = await pool.query(
+    'SELECT "Order".OrderID, "User".FirstName, "User".LastName, "User".Email, "User".PhoneNo, Game.Title, Game.ImageURL, "Order".OrderDate, "Order".TotalAmount, "Order".Status ' +
+      'FROM "Order" ' +
+      'JOIN "User" ON "Order".UserID = "User".UserID ' +
+      'JOIN Game ON "Order".GameID = Game.GameID ' +
+      'WHERE "Order".UserID = $1',
+    [id]
+  );
 
     res.status(200).json({ success: true, orders: orders.rows });
   } catch (error) {
     console.error("Error occurred while retrieving orders:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "An error occurred while retrieving orders",
-      });
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while retrieving orders",
+    });
   }
 });
 
@@ -278,12 +256,10 @@ app.get("/games", async (req, res) => {
     res.status(200).json({ success: true, products: products.rows });
   } catch (error) {
     console.error("Error occurred while retrieving products:", error);
-    res
-      .status(500)
-      .json({
-        success: false,
-        message: "An error occurred while retrieving products",
-      });
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while retrieving products",
+    });
   }
 });
 

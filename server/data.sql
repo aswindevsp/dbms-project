@@ -50,7 +50,7 @@ CREATE TABLE "Order" (
 
 
 -- Game 1
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Final Fantasy XVI - PlayStation 5',
     'Square Enix',
@@ -65,12 +65,12 @@ VALUES (
     'PlayStation 5',
     'Final Fantasy',
     'Square Enix',
-    'https://images-ext-2.discordapp.net/external/OFZfPCrnlgqo1ZYWgvg7Esvj1mlSN2ETpujJ4sGdbDk/https/i.imgur.com/JHFymHd.png' 
+    'https://images-ext-2.discordapp.net/external/OFZfPCrnlgqo1ZYWgvg7Esvj1mlSN2ETpujJ4sGdbDk/https/i.imgur.com/JHFymHd.png'    
 );
 
 
 -- Game 2
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Call of Duty: Modern Warfare',
     'Infinity Ward',
@@ -85,12 +85,11 @@ VALUES (
     'PlayStation 4, Xbox One, PC',
     'Call of Duty',
     'Activision',
-    'https://images-ext-2.discordapp.net/external/0HBLs6qIct3NFZcYdbSSLSx3ooW9Raqockc_UeXJpCs/https/i.imgur.com/0Q86UMd.png'
-    
+    'https://images-ext-2.discordapp.net/external/0HBLs6qIct3NFZcYdbSSLSx3ooW9Raqockc_UeXJpCs/https/i.imgur.com/0Q86UMd.png'    
 );
 
 -- Game 3
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'The Legend of Zelda: Breath of the Wild',
     'Nintendo',
@@ -109,7 +108,7 @@ VALUES (
 );
 
 -- Game 4
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Grand Theft Auto V',
     'Rockstar North',
@@ -128,7 +127,7 @@ VALUES (
 );
 
 -- Game 5
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Minecraft',
     'Mojang Studios',
@@ -147,7 +146,7 @@ VALUES (
 );
 
 -- Game 6
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Red Dead Redemption 2',
     'Rockstar Games',
@@ -165,7 +164,7 @@ VALUES (
     'https://images-ext-1.discordapp.net/external/-ia7RsHFbJGyxmuX-Sxa5lkdTHZV93wwlWuMMDcDuRU/https/i.imgur.com/qKTsTvR.png'
 );
 
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Super Mario Odyssey',
     'Nintendo',
@@ -185,7 +184,7 @@ VALUES (
 
 
 -- Game 8
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'The Witcher 3: Wild Hunt',
     'CD Projekt Red',
@@ -204,7 +203,7 @@ VALUES (
 );
 
 -- Game 9
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Pokémon Sword and Shield',
     'Game Freak',
@@ -223,7 +222,7 @@ VALUES (
 );
 
 -- Game 10
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
+INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURl)
 VALUES (
     'Fortnite',
     'Epic Games',
@@ -245,10 +244,6 @@ VALUES (
 -- Insert data into User table
 INSERT INTO "User" (FirstName, LastName, Email, Password, PhoneNo)
 VALUES ('Alice', 'Johnson', 'alice@example.com', 'password123', '1234567890');
-
--- Insert data into Game table
-INSERT INTO Game (Title, Developer, Price, ReleaseDate, Description, UPC, Brand, VendorNo, NoOfPlayers, Genre, Platforms, Franchise, PublisherName, ImageURL)
-VALUES ('Final Fantasy XVI - PlayStation 5', 'Square Enix', 64.99, '2023-06-22', 'The sun is setting upon the land of Valisthea...', '662248927152', 'Square Enix', '92715', 1, 'RPG', 'PlayStation 5', 'Final Fantasy', 'Square Enix', '/gameImages/final-fantasy-xvi-ps5.jpg');
 
 -- Insert data into Order table
 INSERT INTO "Order" (UserID, GameID, OrderDate, DelivedDate, TotalAmount, Status)
