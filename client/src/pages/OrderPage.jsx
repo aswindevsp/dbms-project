@@ -8,11 +8,14 @@ const OrderPage = () => {
   const [orderData, setOrderData] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
 
+  // filteredOrders.sort((a, b) => { new Date(b.date) - new Date(a.date) });
+
   useEffect(() => {
     const fetchOrderData = async () => {
       try {
         const response = await userOrder();
         setOrderData(response.orders);
+        
       } catch (error) {
         console.log(error);
       }

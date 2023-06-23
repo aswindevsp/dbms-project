@@ -116,12 +116,12 @@ app.post("/user/signup", async (req, res) => {
 
 // Buying a product
 app.post("/user/buy", async (req, res) => {
-  console.log("Tyring to buy a product");
-  const { userID, productID, quantity } = req.body;
+  console.log("Trying to buy a product");
+  const { UserID, GameID } = req.body;
   try {
     // Check if the product exists
-    const product = await pool.query("SELECT * FROM game WHERE gameID = $1", [
-      productID,
+    const product = await pool.query("SELECT * FROM Game WHERE GameID = $1", [
+      GameID,
     ]);
     if (!product || product.rows.length === 0) {
       res
@@ -130,34 +130,26 @@ app.post("/user/buy", async (req, res) => {
       return;
     }
 
-    // Check if the quantity is valid
-    if (quantity <= 0 || quantity > product.rows[0].quantity) {
-      res.status(401).json({ success: false, message: "Invalid quantity" });
-      return;
-    }
-
     await pool.query("BEGIN");
-
+    console.log(product.rows[0]);
     // Create a new order
     const newOrder = await pool.query(
-      'INSERT INTO "Order" (UserID, gameID, quantity) VALUES ($1, $2, $3) RETURNING *',
-      [userID, productID, quantity]
+      'INSERT INTO "Order" (UserID, GameID, OrderDate,TotalAmount, Status) VALUES ($1, $2, CURRENT_DATE, $3, $4) RETURNING *',
+      [UserID, GameID, product.rows[0].price, 'Pending']
     );
 
-    // Update the quantity of the product
-    const newQuantity = product.rows[0].quantity - quantity;
-    const updatedProduct = await pool.query(
-      "UPDATE game SET quantity = $1 WHERE gameID = $2 RETURNING *",
-      [newQuantity, productID]
-    );
+    // Update the product t
+    // const updatedProduct = await pool.query(
+      // "UPDATE Game SET sold = true WHERE GameID = $1 RETURNING *",
+      // [GameID]
+    // );
 
-    if (newOrder && updatedProduct) {
+    if (newOrder) {
       await pool.query("COMMIT");
       res.status(201).json({
         success: true,
         message: "Order successful",
         order: newOrder.rows[0],
-        product: updatedProduct.rows[0],
       });
     } else {
       await pool.query("ROLLBACK");
@@ -172,6 +164,7 @@ app.post("/user/buy", async (req, res) => {
       .json({ success: false, message: "An error occurred during buying" });
   }
 });
+
 
 app.get("/user/orders/cancel/:id", async (req, res) => {
   console.log("Cancelling an order");
@@ -188,9 +181,10 @@ app.get("/user/orders/cancel/:id", async (req, res) => {
       res.status(401).json({ success: false, message: "Order does not exist" });
       return;
     }
-    const product = await pool.query("SELECT * FROM game WHERE gameid = $1", [
+    const product = await pool.query("SELECT * FROM game WHERE GameID = $1", [
       order.rows[0].gameid,
     ]);
+    console.log(order.rows[0]);
     if (!product.rows[0]) {
       // handle the case where the product is not found
       res.status(404).json({ error: "Product not found" });

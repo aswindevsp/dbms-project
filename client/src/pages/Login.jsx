@@ -66,14 +66,14 @@ const Login = () => {
           component="h1"
           sx={{ mb: "2rem", textAlign: "left" }}
         >
-          Welcome to GameStop
+          Welcome to Game Zone X
         </Typography>
         <Typography
           variant="subtitle1"
           component="h1"
           sx={{ mb: "2rem", textAlign: "left", color: "#98a6ad" }}
         >
-          Sign into your GameStop account
+          Sign into your Game Zone account
         </Typography>
 
         <TextField
@@ -132,7 +132,7 @@ const Login = () => {
           }}
         ></Box>
         <Typography sx={{ mt: 3, color: "#862e9c" }} variant="subtitle2">
-          New to GameStop ?
+          New to Game Zone ?
         </Typography>
         <Box
           component={Link}

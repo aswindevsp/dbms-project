@@ -14,7 +14,7 @@ const Navbar = () => {
     <div className="sticky top-0 bg-black/90 flex items-center w-screen p-1 px-5 shadow-sm shadow-black z-20 WBE">
       <div className="flex gap-4 w-1/2 items-center">
         <img src="/logo.webp" alt="GameZone" className="w-16" />
-        <h1 className="text-2xl font-bold text-white">GamerZone X</h1>
+        <h1 className="text-2xl font-bold text-white">Game Zone X</h1>
       </div>
       <div className="flex justify-end gap-5 w-full ">
         {id ? (
